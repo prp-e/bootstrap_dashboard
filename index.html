@@ -40,6 +40,11 @@
 
         .graph-box {
             height: 300px;
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
         }
     </style>
 </head>
@@ -125,22 +130,43 @@
             .attr("width", "100%")
             .attr("height", "100%");
 
-        const xScale = d3.scaleLinear()
-            .domain([0, data.length - 1])
-            .range([0, 300]);
+        const margin = { top: 20, right: 20, bottom: 30, left: 50 };
+        const width = +svg.attr("width") - margin.left - margin.right;
+        const height = +svg.attr("height") - margin.top - margin.bottom;
 
-        const yScale = d3.scaleLinear()
-            .domain([0, d3.max(data)])
-            .range([200, 0]);
+        const x = d3.scaleLinear().range([0, width]);
+        const y = d3.scaleLinear().range([height, 0]);
 
         const line = d3.line()
-            .x((d, i) => xScale(i))
-            .y(d => yScale(d));
+            .x((d, i) => x(i))
+            .y(d => y(d));
 
-        svg.append("path")
+        const g = svg.append("g")
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+        x.domain(d3.extent(data, (d, i) => i));
+        y.domain([0, d3.max(data)]);
+
+        g.append("g")
+            .attr("transform", "translate(0," + height + ")")
+            .call(d3.axisBottom(x));
+
+        g.append("g")
+            .call(d3.axisLeft(y))
+            .append("text")
+            .attr("fill", "#000")
+            .attr("transform", "rotate(-90)")
+            .attr("y", 6)
+            .attr("dy", "0.71em")
+            .attr("text-anchor", "end")
+            .text("Value");
+
+        g.append("path")
             .datum(data)
             .attr("fill", "none")
-            .attr("stroke", "steelblue")
+            .attr("stroke", "purple")
+            .attr("stroke-linejoin", "round")
+            .attr("stroke-linecap", "round")
             .attr("stroke-width", 2)
             .attr("d", line);
     </script>
