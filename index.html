@@ -137,11 +137,12 @@
         const svg = d3.select("#graphContainer")
             .append("svg")
             .attr("width", "100%")
-            .attr("height", "100%");
+            .attr("height", "100%")
+            .attr("viewBox", `0 0 800 300`);
 
         const margin = { top: 20, right: 20, bottom: 30, left: 50 };
-        const width = +svg.attr("width") - margin.left - margin.right;
-        const height = +svg.attr("height") - margin.top - margin.bottom;
+        const width = 800 - margin.left - margin.right;
+        const height = 300 - margin.top - margin.bottom;
 
         const x = d3.scaleTime().range([0, width]);
         const y = d3.scaleLinear().range([height, 0]);
