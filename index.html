@@ -27,6 +27,14 @@
         .nav-link.active {
             background-color: #1f4068;
         }
+
+        .box {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 
@@ -61,7 +69,22 @@
             <!-- Main Content -->
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
                 <h1>Dashboard</h1>
-                <p>Bootstrap Dashboard Template with blue and white color scheme.</p>
+                <div class="row">
+                    <div class="col-md-8">
+                        <!-- Add your graph here -->
+                        <div class="box" style="height: 300px;">
+                            <!-- Add your graph code here -->
+                            Your Graph
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <!-- Add your boxes here -->
+                        <div class="box">Box 1</div>
+                        <div class="box">Box 2</div>
+                        <div class="box">Box 3</div>
+                        <div class="box">Box 4</div>
+                    </div>
+                </div>
             </main>
         </div>
     </div>
