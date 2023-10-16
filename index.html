@@ -123,7 +123,16 @@
     <!-- D3.js script for creating a sample graph -->
     <script>
         // Sample D3.js code for creating a graph
-        const data = [10, 20, 30, 40, 50];
+        const data = [];
+        const numDataPoints = 10;
+        const startDate = new Date();
+
+        for (let i = 0; i < numDataPoints; i++) {
+            const currentDate = new Date(startDate);
+            currentDate.setDate(startDate.getDate() + i);
+            const randomValue = Math.random() * 100; // Random value for demonstration purposes
+            data.push({ date: currentDate, usage: randomValue });
+        }
 
         const svg = d3.select("#graphContainer")
             .append("svg")
@@ -134,18 +143,18 @@
         const width = +svg.attr("width") - margin.left - margin.right;
         const height = +svg.attr("height") - margin.top - margin.bottom;
 
-        const x = d3.scaleLinear().range([0, width]);
+        const x = d3.scaleTime().range([0, width]);
         const y = d3.scaleLinear().range([height, 0]);
 
         const line = d3.line()
-            .x((d, i) => x(i))
-            .y(d => y(d));
+            .x(d => x(d.date))
+            .y(d => y(d.usage));
 
         const g = svg.append("g")
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-        x.domain(d3.extent(data, (d, i) => i));
-        y.domain([0, d3.max(data)]);
+        x.domain(d3.extent(data, d => d.date));
+        y.domain([0, d3.max(data, d => d.usage)]);
 
         g.append("g")
             .attr("transform", "translate(0," + height + ")")
@@ -159,7 +168,7 @@
             .attr("y", 6)
             .attr("dy", "0.71em")
             .attr("text-anchor", "end")
-            .text("Value");
+            .text("Usage");
 
         g.append("path")
             .datum(data)
